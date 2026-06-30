@@ -3,7 +3,9 @@
 var gBallSize = 100
 
 function onBallClick() {
-    gBallSize += 50
+    const diff = getRandomInt(20, 60)
+
+    gBallSize += diff
 
     if (gBallSize > 400) {
         gBallSize = 100
