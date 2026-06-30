@@ -8,23 +8,57 @@
 </head>
 
 <body>
-    <div class="controls">
-    <button onclick="onUndo()" class="undo-btn" disabled>Undo</button>
-    <button onclick="onRedo()" class="redo-btn" disabled>Redo</button>
-</div>
-<h1>
-    The Ball Game |
-    Moves: <span class="moves-count">0</span> |
-    Time: <span class="timer">0</span>s
-</h1>
+    <main class="game-shell">
+        <section class="game-card">
+            <div class="top-row">
+                <div>
+                    <p class="tagline">A tiny ball experiment</p>
+                    <h1>The Ball Game</h1>
+                </div>
 
-    <div class="ball ball1" onclick="onBallClick(this, 400)">100</div>
-    <div class="ball ball2" onclick="onBallClick(this, 300)">100</div>
-    <div class="ball ball3" onclick="onSwapBallsClick()">Swap</div>
-    <div class="ball ball4" onclick="onShrinkBallsClick()">Shrink</div>
-    <div class="ball ball5" onclick="onChangeBgClick()">BG</div>
-    <div class="ball ball6" onclick="onResetClick()" onmouseenter="onResetHoverStart()"
-        onmouseleave="onResetHoverEnd()">Reset</div>
+                <div class="controls">
+                    <button onclick="onUndo()" class="undo-btn" disabled>Undo</button>
+                    <button onclick="onRedo()" class="redo-btn" disabled>Redo</button>
+                </div>
+            </div>
+
+            <p class="subtitle">
+                Click the balls, change their size, swap things around, and try to keep the chaos under control.
+            </p>
+
+            <section class="scoreboard">
+                <div>
+                    <span class="score-label">Moves</span>
+                    <span class="score-number moves-count">0</span>
+                </div>
+
+                <div>
+                    <span class="score-label">Time</span>
+                    <span class="score-number"><span class="timer">0</span>s</span>
+                </div>
+            </section>
+
+            <section class="playground">
+                <div class="ball ball1" onclick="onBallClick(this, 400)">100</div>
+                <div class="ball ball2" onclick="onBallClick(this, 300)">100</div>
+                <div class="ball ball3" onclick="onSwapBallsClick()">Swap</div>
+                <div class="ball ball4" onclick="onShrinkBallsClick()">Shrink</div>
+                <div class="ball ball5" onclick="onChangeBgClick()">Color</div>
+
+                <div
+                    class="ball ball6"
+                    onclick="onResetClick()"
+                    onmouseenter="onResetHoverStart()"
+                    onmouseleave="onResetHoverEnd()">
+                    Reset
+                </div>
+            </section>
+
+            <p class="footer-note">
+                Small tip: hover the Reset ball for 2 seconds to start auto mode.
+            </p>
+        </section>
+    </main>
 
     <script src="util.js"></script>
     <script src="main.js"></script>
