@@ -1,5 +1,7 @@
 'use strict'
 
+var gGameStates = []
+var gCurrStateIdx = -1
 var gHoverTimeoutId = null
 var gAutoIntervalId = null
 var gAutoCycles = 0
@@ -18,7 +20,9 @@ function onBallClick(elBall, maxDiameter) {
     elBall.style.height = ballSize + 'px'
     elBall.style.backgroundColor = getRandomColor()
     elBall.innerText = ballSize
+    saveState()
 }
+
 
 function onSwapBallsClick() {
     const elBall1 = document.querySelector('.ball1')
@@ -39,6 +43,7 @@ function onSwapBallsClick() {
     elBall2.style.height = ball1Size + 'px'
     elBall2.style.backgroundColor = ball1Color
     elBall2.innerText = ball1Size
+    saveState()
 }
 
 function onShrinkBallsClick() {
@@ -47,6 +52,7 @@ function onShrinkBallsClick() {
 
     shrinkBall(elBall1)
     shrinkBall(elBall2)
+    saveState()
 }
 
 function shrinkBall(elBall) {
@@ -67,6 +73,7 @@ function shrinkBall(elBall) {
 
 function onChangeBgClick() {
     document.body.style.backgroundColor = getRandomColor()
+    saveState()
 }
 
 function onResetClick() {
@@ -77,6 +84,7 @@ function onResetClick() {
     resetBall(elBall2, 'lightblue')
 
     document.body.style.backgroundColor = 'black'
+    saveState()
 }
 
 function resetBall(elBall, color) {
@@ -133,4 +141,76 @@ function clearAutoPlay() {
     }
 
     gAutoCycles = 0
+}
+
+
+function saveState() {
+    const state = getState()
+
+    gGameStates = gGameStates.slice(0, gCurrStateIdx + 1)
+    gGameStates.push(state)
+    gCurrStateIdx++
+
+    updateUndoRedoButtons()
+}
+
+function getState() {
+    const elsBalls = document.querySelectorAll('.ball')
+    const balls = []
+
+    for (var i = 0; i < elsBalls.length; i++) {
+        const elBall = elsBalls[i]
+
+        balls.push({
+            width: elBall.style.width || getComputedStyle(elBall).width,
+            height: elBall.style.height || getComputedStyle(elBall).height,
+            backgroundColor: getComputedStyle(elBall).backgroundColor,
+            text: elBall.innerText
+        })
+    }
+
+    return {
+        bodyBackgroundColor: getComputedStyle(document.body).backgroundColor,
+        balls: balls
+    }
+}
+
+function applyState(state) {
+    const elsBalls = document.querySelectorAll('.ball')
+
+    document.body.style.backgroundColor = state.bodyBackgroundColor
+
+    for (var i = 0; i < elsBalls.length; i++) {
+        const elBall = elsBalls[i]
+        const ballState = state.balls[i]
+
+        elBall.style.width = ballState.width
+        elBall.style.height = ballState.height
+        elBall.style.backgroundColor = ballState.backgroundColor
+        elBall.innerText = ballState.text
+    }
+}
+
+function onUndo() {
+    if (gCurrStateIdx <= 0) return
+
+    gCurrStateIdx--
+    applyState(gGameStates[gCurrStateIdx])
+    updateUndoRedoButtons()
+}
+
+function onRedo() {
+    if (gCurrStateIdx >= gGameStates.length - 1) return
+
+    gCurrStateIdx++
+    applyState(gGameStates[gCurrStateIdx])
+    updateUndoRedoButtons()
+}
+
+function updateUndoRedoButtons() {
+    const elUndoBtn = document.querySelector('.undo-btn')
+    const elRedoBtn = document.querySelector('.redo-btn')
+
+    elUndoBtn.disabled = gCurrStateIdx <= 0
+    elRedoBtn.disabled = gCurrStateIdx >= gGameStates.length - 1
 }
