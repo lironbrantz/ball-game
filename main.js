@@ -77,18 +77,21 @@ function shrinkBall(elBall) {
 
 
 function onChangeBgClick() {
-    document.body.style.backgroundColor = getRandomColor()
+    const elPlayground = document.querySelector('.playground')
+    elPlayground.style.backgroundColor = getRandomColor()
     registerMove()
 }
 
 function onResetClick() {
     const elBall1 = document.querySelector('.ball1')
     const elBall2 = document.querySelector('.ball2')
+    const elPlayground = document.querySelector('.playground')
 
-    resetBall(elBall1, 'orange')
-    resetBall(elBall2, 'lightblue')
+    resetBall(elBall1, '#ffb703')
+    resetBall(elBall2, '#8ecae6')
 
-    document.body.style.backgroundColor = 'black'
+    elPlayground.style.backgroundColor = '#fffdf2'
+    document.body.style.backgroundColor = '#f9f6ef'
 
     gMoveCount = 0
     updateMovesCount()
@@ -167,6 +170,7 @@ function saveState() {
 function getState() {
     const elsBalls = document.querySelectorAll('.ball')
     const balls = []
+    const elPlayground = document.querySelector('.playground')
 
     for (var i = 0; i < elsBalls.length; i++) {
         const elBall = elsBalls[i]
@@ -181,14 +185,17 @@ function getState() {
 
     return {
         bodyBackgroundColor: getComputedStyle(document.body).backgroundColor,
+        playgroundBackgroundColor: getComputedStyle(elPlayground).backgroundColor,
         balls: balls
     }
 }
 
 function applyState(state) {
     const elsBalls = document.querySelectorAll('.ball')
+    const elPlayground = document.querySelector('.playground')
 
     document.body.style.backgroundColor = state.bodyBackgroundColor
+    elPlayground.style.backgroundColor = state.playgroundBackgroundColor
 
     for (var i = 0; i < elsBalls.length; i++) {
         const elBall = elsBalls[i]
