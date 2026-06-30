@@ -11,4 +11,10 @@ h1 {
     background-color: orange;
     border-radius: 50%;
     margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
 }
