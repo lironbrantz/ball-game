@@ -59,3 +59,8 @@ function shrinkBall(elBall) {
     elBall.style.height = ballSize + 'px'
     elBall.innerText = ballSize
 }
+
+
+function onChangeBgClick() {
+    document.body.style.backgroundColor = getRandomColor()
+}
