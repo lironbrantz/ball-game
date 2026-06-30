@@ -64,3 +64,20 @@ function shrinkBall(elBall) {
 function onChangeBgClick() {
     document.body.style.backgroundColor = getRandomColor()
 }
+
+function onResetClick() {
+    const elBall1 = document.querySelector('.ball1')
+    const elBall2 = document.querySelector('.ball2')
+
+    resetBall(elBall1, 'orange')
+    resetBall(elBall2, 'lightblue')
+
+    document.body.style.backgroundColor = 'black'
+}
+
+function resetBall(elBall, color) {
+    elBall.style.width = '100px'
+    elBall.style.height = '100px'
+    elBall.style.backgroundColor = color
+    elBall.innerText = '100'
+}
