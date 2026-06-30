@@ -1,5 +1,9 @@
 'use strict'
 
+var gHoverTimeoutId = null
+var gAutoIntervalId = null
+var gAutoCycles = 0
+
 function onBallClick(elBall, maxDiameter) {
     const diff = getRandomInt(20, 60)
 
@@ -80,4 +84,53 @@ function resetBall(elBall, color) {
     elBall.style.height = '100px'
     elBall.style.backgroundColor = color
     elBall.innerText = '100'
+}
+
+
+
+function onResetHoverStart() {
+    clearAutoPlay()
+
+    gHoverTimeoutId = setTimeout(startAutoPlay, 2000)
+}
+
+function onResetHoverEnd() {
+    clearAutoPlay()
+}
+
+function startAutoPlay() {
+    gHoverTimeoutId = null
+    gAutoCycles = 0
+
+    gAutoIntervalId = setInterval(runAutoCycle, 2000)
+}
+
+function runAutoCycle() {
+    const elBall1 = document.querySelector('.ball1')
+    const elBall2 = document.querySelector('.ball2')
+
+    onBallClick(elBall1, 400)
+    onBallClick(elBall2, 300)
+    onSwapBallsClick()
+    onShrinkBallsClick()
+
+    gAutoCycles++
+
+    if (gAutoCycles === 10) {
+        clearAutoPlay()
+    }
+}
+
+function clearAutoPlay() {
+    if (gHoverTimeoutId) {
+        clearTimeout(gHoverTimeoutId)
+        gHoverTimeoutId = null
+    }
+
+    if (gAutoIntervalId) {
+        clearInterval(gAutoIntervalId)
+        gAutoIntervalId = null
+    }
+
+    gAutoCycles = 0
 }

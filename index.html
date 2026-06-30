@@ -10,12 +10,13 @@
 <body>
     <h1>The Ball Game</h1>
 
-<div class="ball ball1" onclick="onBallClick(this, 400)">100</div>
-<div class="ball ball2" onclick="onBallClick(this, 300)">100</div>
-<div class="ball ball3" onclick="onSwapBallsClick()">Swap</div>
-<div class="ball ball4" onclick="onShrinkBallsClick()">Shrink</div>
-<div class="ball ball5" onclick="onChangeBgClick()">BG</div>
-<div class="ball ball6" onclick="onResetClick()">Reset</div>
+    <div class="ball ball1" onclick="onBallClick(this, 400)">100</div>
+    <div class="ball ball2" onclick="onBallClick(this, 300)">100</div>
+    <div class="ball ball3" onclick="onSwapBallsClick()">Swap</div>
+    <div class="ball ball4" onclick="onShrinkBallsClick()">Shrink</div>
+    <div class="ball ball5" onclick="onChangeBgClick()">BG</div>
+    <div class="ball ball6" onclick="onResetClick()" onmouseenter="onResetHoverStart()"
+        onmouseleave="onResetHoverEnd()">Reset</div>
 
     <script src="util.js"></script>
     <script src="main.js"></script>
