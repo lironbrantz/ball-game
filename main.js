@@ -2,6 +2,11 @@
 
 var gGameStates = []
 var gCurrStateIdx = -1
+
+var gMoveCount = 0
+var gGameStartTime = null
+var gTimerIntervalId = null
+
 var gHoverTimeoutId = null
 var gAutoIntervalId = null
 var gAutoCycles = 0
@@ -20,7 +25,7 @@ function onBallClick(elBall, maxDiameter) {
     elBall.style.height = ballSize + 'px'
     elBall.style.backgroundColor = getRandomColor()
     elBall.innerText = ballSize
-    saveState()
+   registerMove()
 }
 
 
@@ -43,7 +48,7 @@ function onSwapBallsClick() {
     elBall2.style.height = ball1Size + 'px'
     elBall2.style.backgroundColor = ball1Color
     elBall2.innerText = ball1Size
-    saveState()
+    registerMove()
 }
 
 function onShrinkBallsClick() {
@@ -52,7 +57,7 @@ function onShrinkBallsClick() {
 
     shrinkBall(elBall1)
     shrinkBall(elBall2)
-    saveState()
+    registerMove()
 }
 
 function shrinkBall(elBall) {
@@ -73,7 +78,7 @@ function shrinkBall(elBall) {
 
 function onChangeBgClick() {
     document.body.style.backgroundColor = getRandomColor()
-    saveState()
+    registerMove()
 }
 
 function onResetClick() {
@@ -84,6 +89,11 @@ function onResetClick() {
     resetBall(elBall2, 'lightblue')
 
     document.body.style.backgroundColor = 'black'
+
+    gMoveCount = 0
+    updateMovesCount()
+    resetTimer()
+
     saveState()
 }
 
@@ -214,3 +224,42 @@ function updateUndoRedoButtons() {
     elUndoBtn.disabled = gCurrStateIdx <= 0
     elRedoBtn.disabled = gCurrStateIdx >= gGameStates.length - 1
 }
+
+
+function registerMove() {
+    gMoveCount++
+    updateMovesCount()
+    startTimer()
+    saveState()
+}
+
+function updateMovesCount() {
+    const elMovesCount = document.querySelector('.moves-count')
+    elMovesCount.innerText = gMoveCount
+}
+
+function startTimer() {
+    if (gTimerIntervalId) return
+
+    gGameStartTime = Date.now()
+    gTimerIntervalId = setInterval(updateTimer, 1000)
+}
+
+function updateTimer() {
+    const elapsedSeconds = Math.floor((Date.now() - gGameStartTime) / 1000)
+
+    const elTimer = document.querySelector('.timer')
+    elTimer.innerText = elapsedSeconds
+}
+
+
+function resetTimer() {
+    clearInterval(gTimerIntervalId)
+    gTimerIntervalId = null
+    gGameStartTime = null
+
+    const elTimer = document.querySelector('.timer')
+    elTimer.innerText = 0
+}
+
+saveState()
