@@ -20,3 +20,8 @@ h1 {
     
     transition: 1s;
 }
+
+.ball2 {
+    background-color: lightblue;
+    margin-top: 20px;
+}
