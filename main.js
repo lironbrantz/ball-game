@@ -36,3 +36,26 @@ function onSwapBallsClick() {
     elBall2.style.backgroundColor = ball1Color
     elBall2.innerText = ball1Size
 }
+
+function onShrinkBallsClick() {
+    const elBall1 = document.querySelector('.ball1')
+    const elBall2 = document.querySelector('.ball2')
+
+    shrinkBall(elBall1)
+    shrinkBall(elBall2)
+}
+
+function shrinkBall(elBall) {
+    const diff = getRandomInt(20, 60)
+
+    var ballSize = parseInt(elBall.innerText)
+    ballSize -= diff
+
+    if (ballSize < 100) {
+        ballSize = 100
+    }
+
+    elBall.style.width = ballSize + 'px'
+    elBall.style.height = ballSize + 'px'
+    elBall.innerText = ballSize
+}
