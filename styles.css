@@ -5,6 +5,7 @@ body {
 h1 {
     color: white;
 }
+
 .ball {
     width: 100px;
     height: 100px;
@@ -17,11 +18,17 @@ h1 {
     justify-content: center;
     font-size: 22px;
     font-weight: bold;
-    
+
     transition: 1s;
+    cursor: pointer;
 }
 
 .ball2 {
     background-color: lightblue;
+    margin-top: 20px;
+}
+
+.ball3 {
+    background-color: lightgreen;
     margin-top: 20px;
 }
